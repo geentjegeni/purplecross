@@ -1,4 +1,5 @@
 import { createColumnHelper } from '@tanstack/vue-table'
+import { getEmploymentDateStatus } from '@/utils/employees/dateUtils'
 
 const columnHelper = createColumnHelper()
 
@@ -21,10 +22,26 @@ export const employeeTableColumns = [
 
   columnHelper.accessor('dateOfEmployment', {
     header: 'Date of Employment',
+
+    cell: (info) => {
+      const status = getEmploymentDateStatus(info.getValue())
+
+      return status === 'future' ? 'Employed soon' : 'Currently employed'
+    },
   }),
 
   columnHelper.accessor('terminationDate', {
     header: 'Termination Date',
+
+    cell: (info) => {
+      const status = getEmploymentDateStatus(info.getValue())
+
+      if (!status) {
+        return 'N/A'
+      }
+
+      return status === 'future' ? 'To be terminated' : 'Terminated'
+    },
   }),
 
   columnHelper.display({
