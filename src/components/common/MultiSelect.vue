@@ -1,5 +1,6 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { ChevronDown } from '@lucide/vue'
 
 const props = defineProps({
   label: {
@@ -53,7 +54,7 @@ onBeforeUnmount(() => document.removeEventListener('click', onClickOutside))
       @click="isOpen = !isOpen"
     >
       {{ buttonLabel }}
-      <span class="chevron" aria-hidden="true">{{ isOpen ? '▴' : '▾' }}</span>
+      <ChevronDown :size="14" class="chevron" :class="{ 'chevron-open': isOpen }" />
     </button>
 
     <div v-if="isOpen" class="multi-select-panel">
@@ -118,7 +119,11 @@ onBeforeUnmount(() => document.removeEventListener('click', onClickOutside))
 }
 
 .chevron {
-  font-size: 0.7rem;
+  transition: transform 0.15s ease;
+}
+
+.chevron-open {
+  transform: rotate(180deg);
 }
 
 .multi-select-panel {

@@ -6,6 +6,7 @@ import {
   tableFeatures,
   useTable,
 } from '@tanstack/vue-table'
+import { ChevronDown, ChevronsUpDown, ChevronUp } from '@lucide/vue'
 
 const props = defineProps({
   columns: {
@@ -67,8 +68,10 @@ const table = useTable({
           >
             <span class="th-content">
               <FlexRender :header="header" />
-              <span v-if="header.column.getIsSorted()" class="sort-indicator">
-                {{ header.column.getIsSorted() === 'asc' ? '▲' : '▼' }}
+              <span v-if="header.column.getCanSort()" class="sort-indicator">
+                <ChevronUp v-if="header.column.getIsSorted() === 'asc'" :size="14" />
+                <ChevronDown v-else-if="header.column.getIsSorted() === 'desc'" :size="14" />
+                <ChevronsUpDown v-else :size="14" class="sort-idle" />
               </span>
             </span>
           </th>
@@ -142,8 +145,12 @@ const table = useTable({
 }
 
 .sort-indicator {
+  display: inline-flex;
   color: #7c3aed;
-  font-size: 0.65rem;
+}
+
+.sort-idle {
+  color: #9ca3af;
 }
 
 .data-table tbody tr {

@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue'
+import { ChevronFirst, ChevronLast, ChevronLeft, ChevronRight } from '@lucide/vue'
 import BaseToolbar from '@/components/common/BaseToolbar.vue'
 
 const props = defineProps({
@@ -52,12 +53,18 @@ const rangeEnd = computed(() => Math.min(page.value * pageSize.value, props.tota
     </label>
 
     <div class="page-controls">
-      <button type="button" :disabled="!canPrev" aria-label="First page" @click="page = 1">«</button>
-      <button type="button" :disabled="!canPrev" aria-label="Previous page" @click="page--">‹</button>
+      <button type="button" :disabled="!canPrev" aria-label="First page" @click="page = 1">
+        <ChevronFirst :size="14" />
+      </button>
+      <button type="button" :disabled="!canPrev" aria-label="Previous page" @click="page--">
+        <ChevronLeft :size="14" />
+      </button>
       <span class="page-indicator">{{ page }} / {{ pageCount }}</span>
-      <button type="button" :disabled="!canNext" aria-label="Next page" @click="page++">›</button>
+      <button type="button" :disabled="!canNext" aria-label="Next page" @click="page++">
+        <ChevronRight :size="14" />
+      </button>
       <button type="button" :disabled="!canNext" aria-label="Last page" @click="page = pageCount">
-        »
+        <ChevronLast :size="14" />
       </button>
     </div>
   </BaseToolbar>
@@ -97,6 +104,9 @@ const rangeEnd = computed(() => Math.min(page.value * pageSize.value, props.tota
 }
 
 .page-controls button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   min-width: 28px;
   padding: 4px 8px;
   border: 1px solid #d1d5db;
