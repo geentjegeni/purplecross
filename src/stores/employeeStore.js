@@ -1,11 +1,27 @@
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import employeeService from '@/services/employeeService'
+
+function uniqueSorted(values) {
+  return [...new Set(values.filter(Boolean))].sort()
+}
 
 export const useEmployeeStore = defineStore('employee', () => {
   const employees = ref([])
   const isLoading = ref(false)
   const error = ref(null)
+
+  const searchQuery = ref('')
+  const selectedDepartments = ref([])
+  const selectedOccupations = ref([])
+
+  const departments = computed(() =>
+    uniqueSorted(employees.value.map((employee) => employee.department)),
+  )
+
+  const occupations = computed(() =>
+    uniqueSorted(employees.value.map((employee) => employee.occupation)),
+  )
 
   async function fetchEmployees() {
     isLoading.value = true
@@ -24,6 +40,11 @@ export const useEmployeeStore = defineStore('employee', () => {
     employees,
     isLoading,
     error,
+    searchQuery,
+    selectedDepartments,
+    selectedOccupations,
+    departments,
+    occupations,
     fetchEmployees,
   }
 })

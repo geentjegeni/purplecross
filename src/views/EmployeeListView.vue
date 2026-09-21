@@ -2,10 +2,21 @@
 import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useEmployeeStore } from '@/stores/employeeStore'
+import { useEmployeeFilters } from '@/composables/useEmployeeFilters'
 import EmployeeTable from '@/components/employees/EmployeeTable.vue'
+import EmployeeTableToolbar from '@/components/employees/EmployeeTableToolbar.vue'
 
 const employeeStore = useEmployeeStore()
-const { employees, isLoading, error } = storeToRefs(employeeStore)
+const { isLoading, error } = storeToRefs(employeeStore)
+
+const {
+  searchQuery,
+  selectedDepartments,
+  selectedOccupations,
+  departments,
+  occupations,
+  filteredEmployees,
+} = useEmployeeFilters()
 
 onMounted(() => {
   employeeStore.fetchEmployees()
@@ -27,7 +38,17 @@ onMounted(() => {
 
       <div v-else-if="error" class="state state-error">Failed to load employees.</div>
 
-      <EmployeeTable v-else :employees="employees" />
+      <template v-else>
+        <EmployeeTableToolbar
+          v-model:search="searchQuery"
+          v-model:departments="selectedDepartments"
+          v-model:occupations="selectedOccupations"
+          :department-options="departments"
+          :occupation-options="occupations"
+        />
+
+        <EmployeeTable :employees="filteredEmployees" />
+      </template>
     </section>
   </main>
 </template>
@@ -67,11 +88,12 @@ h1 {
 }
 
 .card {
+  --card-radius: 12px;
+
   max-width: 1400px;
   margin: 0 auto;
-  overflow: hidden;
   border: 1px solid #e5e7eb;
-  border-radius: 12px;
+  border-radius: var(--card-radius);
   background: #ffffff;
   box-shadow: 0 2px 8px rgb(0 0 0 / 4%);
 }
@@ -96,7 +118,7 @@ h1 {
   }
 
   .card {
-    border-radius: 10px;
+    --card-radius: 10px;
   }
 }
 </style>

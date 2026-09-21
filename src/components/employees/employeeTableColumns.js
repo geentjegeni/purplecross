@@ -30,14 +30,16 @@ export const employeeTableColumns = [
     },
   }),
 
-  columnHelper.accessor('terminationDate', {
+  columnHelper.accessor((employee) => employee.terminationDate ?? undefined, {
+    id: 'terminationDate',
     header: 'Termination Date',
+    sortUndefined: 'last',
 
     cell: (info) => {
       const status = getEmploymentDateStatus(info.getValue())
 
       if (!status) {
-        return 'N/A'
+        return ''
       }
 
       return status === 'future' ? 'To be terminated' : 'Terminated'

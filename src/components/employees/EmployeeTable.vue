@@ -1,5 +1,8 @@
 <script setup>
-import { FlexRender, tableFeatures, useTable } from '@tanstack/vue-table'
+import { computed } from 'vue'
+import { createPaginatedRowModel, rowPaginationFeature } from '@tanstack/vue-table'
+import DataTable from '@/components/common/DataTable.vue'
+import BasePagination from '@/components/common/BasePagination.vue'
 import { employeeTableColumns } from './employeeTableColumns'
 
 const props = defineProps({
@@ -9,86 +12,33 @@ const props = defineProps({
   },
 })
 
-const features = tableFeatures({})
-
-const table = useTable({
-  key: 'employee-table',
-  features,
-  columns: employeeTableColumns,
-  get data() {
-    return props.employees
-  },
+const pagination = defineModel('pagination', {
+  type: Object,
+  default: () => ({ pageIndex: 0, pageSize: 10 }),
 })
+
+const features = {
+  rowPaginationFeature,
+  paginatedRowModel: createPaginatedRowModel(),
+}
+
+const tableOptions = {
+  state: computed(() => ({ pagination: pagination.value })),
+  onPaginationChange: (next) => {
+    pagination.value = typeof next === 'function' ? next(pagination.value) : next
+  },
+}
 </script>
 
 <template>
-  <div class="table-wrapper">
-    <table class="employee-table">
-      <thead>
-        <tr v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">
-          <th v-for="header in headerGroup.headers" :key="header.id">
-            <FlexRender :header="header" />
-          </th>
-        </tr>
-      </thead>
+  <DataTable
+    table-key="employee-table"
+    :columns="employeeTableColumns"
+    :data="employees"
+    :features="features"
+    :table-options="tableOptions"
+    empty-message="No employees found."
+  />
 
-      <tbody>
-        <tr v-for="row in table.getRowModel().rows" :key="row.id">
-          <td v-for="cell in row.getAllCells()" :key="cell.id">
-            <FlexRender :cell="cell" />
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <BasePagination v-model:pagination="pagination" :total="props.employees.length" />
 </template>
-
-<style scoped>
-.table-wrapper {
-  width: 100%;
-  overflow-x: auto;
-}
-
-.employee-table {
-  width: 100%;
-  border-collapse: collapse;
-  color: #1f2937;
-  font-size: 0.875rem;
-}
-
-.employee-table th,
-.employee-table td {
-  padding: 14px 20px;
-  border-bottom: 1px solid #eef0f3;
-  text-align: left;
-  white-space: nowrap;
-}
-
-.employee-table th {
-  background: #f9fafb;
-  color: #6b7280;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-}
-
-.employee-table tbody tr {
-  transition: background-color 0.15s ease;
-}
-
-.employee-table tbody tr:hover {
-  background: #f9fafb;
-}
-
-.employee-table tbody tr:last-child td {
-  border-bottom: none;
-}
-
-@media (max-width: 768px) {
-  .employee-table th,
-  .employee-table td {
-    padding: 13px 16px;
-  }
-}
-</style>
