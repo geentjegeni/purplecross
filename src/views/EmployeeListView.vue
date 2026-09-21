@@ -1,14 +1,33 @@
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { Plus } from '@lucide/vue'
 import { storeToRefs } from 'pinia'
 import { useEmployeeStore } from '@/stores/employeeStore'
 import { useEmployeeFilters } from '@/composables/useEmployeeFilters'
+import { useToast } from '@/composables/useToast'
 import EmployeeTable from '@/components/employees/EmployeeTable.vue'
 import EmployeeTableToolbar from '@/components/employees/EmployeeTableToolbar.vue'
+import ConfirmDialog from '@/components/common/ConfirmDialog.vue'
 
 const employeeStore = useEmployeeStore()
 const { isLoading, error } = storeToRefs(employeeStore)
+const toast = useToast()
+
+const pendingDelete = ref(null)
+const isDeleting = ref(false)
+
+async function onConfirmDelete() {
+  isDeleting.value = true
+  try {
+    await employeeStore.deleteEmployee(pendingDelete.value.code)
+    toast.success(`Employee ${pendingDelete.value.fullName} deleted`)
+    pendingDelete.value = null
+  } catch {
+    toast.error('Failed to delete the employee. Please try again.')
+  } finally {
+    isDeleting.value = false
+  }
+}
 
 const {
   searchQuery,
@@ -48,9 +67,22 @@ onMounted(() => {
           :occupation-options="occupations"
         />
 
-        <EmployeeTable :employees="filteredEmployees" />
+        <EmployeeTable
+          :employees="filteredEmployees"
+          @delete="(employee) => (pendingDelete = employee)"
+        />
       </template>
     </section>
+
+    <ConfirmDialog
+      :open="!!pendingDelete"
+      title="Delete employee"
+      :message="`Are you sure you want to delete ${pendingDelete?.fullName}? This action cannot be undone.`"
+      confirm-label="Delete"
+      :loading="isDeleting"
+      @confirm="onConfirmDelete"
+      @cancel="pendingDelete = null"
+    />
 
     <RouterLink to="/employees/new" class="fab" aria-label="Create employee">
       <Plus :size="22" />

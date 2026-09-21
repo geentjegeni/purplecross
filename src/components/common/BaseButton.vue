@@ -1,4 +1,6 @@
 <script setup>
+import { RouterLink } from 'vue-router'
+
 defineProps({
   variant: {
     type: String,
@@ -9,13 +11,27 @@ defineProps({
     type: String,
     default: 'button',
   },
+  icon: {
+    type: Boolean,
+    default: false,
+  },
+  to: {
+    type: [String, Object],
+    default: null,
+  },
 })
 </script>
 
 <template>
-  <button :type="type" class="btn" :class="`btn-${variant}`">
+  <component
+    :is="to ? RouterLink : 'button'"
+    :to="to"
+    :type="to ? undefined : type"
+    class="btn"
+    :class="[`btn-${variant}`, { 'btn-icon': icon }]"
+  >
     <slot />
-  </button>
+  </component>
 </template>
 
 <style scoped>
@@ -30,7 +46,9 @@ defineProps({
   font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
+  text-decoration: none;
   transition:
+    color 0.15s ease,
     background-color 0.15s ease,
     border-color 0.15s ease;
 }
@@ -67,5 +85,28 @@ defineProps({
 
 .btn-danger:hover:not(:disabled) {
   background: #b91c1c;
+}
+
+.btn-icon {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border-color: #e5e7eb;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #6b7280;
+}
+
+.btn-icon.btn-secondary:hover:not(:disabled),
+.btn-icon.btn-primary:hover:not(:disabled) {
+  border-color: #7c3aed;
+  background: #ffffff;
+  color: #7c3aed;
+}
+
+.btn-icon.btn-danger:hover:not(:disabled) {
+  border-color: #dc2626;
+  background: #ffffff;
+  color: #dc2626;
 }
 </style>

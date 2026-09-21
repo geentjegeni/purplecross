@@ -26,6 +26,10 @@ defineProps({
     type: Boolean,
     default: false,
   },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
   options: {
     type: Array,
     default: null,
@@ -54,6 +58,7 @@ const datalistId = `${inputId}-options`
       :type="type"
       :placeholder="placeholder"
       :required="required"
+      :disabled="disabled"
       :aria-label="ariaLabel || label || undefined"
       :aria-invalid="!!error"
       :aria-describedby="error ? errorId : undefined"
@@ -98,6 +103,12 @@ const datalistId = `${inputId}-options`
 .form-input:focus {
   border-color: #7c3aed;
   outline: 2px solid #7c3aed33;
+}
+
+.form-input:disabled {
+  background: #f3f4f6;
+  color: #6b7280;
+  cursor: not-allowed;
 }
 
 .has-error .form-input {

@@ -21,7 +21,7 @@ const router = createRouter({
       component: EmployeeCreateView,
     },
     {
-      path: '/employees/:id',
+      path: '/employees/:code',
       component: EmployeeProfileView,
     },
     {

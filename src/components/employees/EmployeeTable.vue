@@ -3,13 +3,19 @@ import { computed } from 'vue'
 import { createPaginatedRowModel, rowPaginationFeature } from '@tanstack/vue-table'
 import DataTable from '@/components/common/DataTable.vue'
 import BasePagination from '@/components/common/BasePagination.vue'
-import { employeeTableColumns } from './employeeTableColumns'
+import { createEmployeeColumns } from './employeeTableColumns'
 
 const props = defineProps({
   employees: {
     type: Array,
     required: true,
   },
+})
+
+const emit = defineEmits(['delete'])
+
+const columns = createEmployeeColumns({
+  onDelete: (employee) => emit('delete', employee),
 })
 
 const pagination = defineModel('pagination', {
@@ -33,7 +39,7 @@ const tableOptions = {
 <template>
   <DataTable
     table-key="employee-table"
-    :columns="employeeTableColumns"
+    :columns="columns"
     :data="employees"
     :features="features"
     :table-options="tableOptions"

@@ -17,6 +17,8 @@ const props = defineProps({
 
 const emit = defineEmits(['submit', 'cancel'])
 
+const isEdit = !!props.initial
+
 const {
   draft,
   errors,
@@ -48,6 +50,7 @@ function onSubmit() {
         label="Code"
         required
         placeholder="e.g. EMP041"
+        :disabled="isEdit"
         :error="errors.code"
         @blur="validateField('code')"
       />

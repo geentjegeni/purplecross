@@ -25,7 +25,7 @@ const occupations = defineModel('occupations', { type: Array, default: () => [] 
       v-model="search"
       type="search"
       class="toolbar-search"
-      placeholder="Search by code, name, occupation or department..."
+      placeholder="Search by name, occupation or department..."
       aria-label="Search employees"
     />
 

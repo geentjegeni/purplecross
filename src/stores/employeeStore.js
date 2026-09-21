@@ -23,6 +23,10 @@ export const useEmployeeStore = defineStore('employee', () => {
     uniqueSorted(employees.value.map((employee) => employee.occupation)),
   )
 
+  function employeeByCode(code) {
+    return employees.value.find((employee) => employee.code === code)
+  }
+
   async function fetchEmployees() {
     isLoading.value = true
     error.value = null
@@ -42,6 +46,20 @@ export const useEmployeeStore = defineStore('employee', () => {
     return created
   }
 
+  async function updateEmployee(code, employee) {
+    const updated = await employeeService.updateEmployee(code, employee)
+    const index = employees.value.findIndex((e) => e.code === code)
+    if (index !== -1) {
+      employees.value[index] = updated
+    }
+    return updated
+  }
+
+  async function deleteEmployee(code) {
+    await employeeService.deleteEmployee(code)
+    employees.value = employees.value.filter((e) => e.code !== code)
+  }
+
   return {
     employees,
     isLoading,
@@ -51,7 +69,10 @@ export const useEmployeeStore = defineStore('employee', () => {
     selectedOccupations,
     departments,
     occupations,
+    employeeByCode,
     fetchEmployees,
     addEmployee,
+    updateEmployee,
+    deleteEmployee,
   }
 })

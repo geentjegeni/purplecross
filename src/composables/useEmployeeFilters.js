@@ -34,7 +34,7 @@ export function useEmployeeFilters() {
 function matchesQuery(employee, query) {
   return (
     !query ||
-    [employee.code, employee.fullName, employee.occupation, employee.department].some((field) =>
+    [employee.fullName, employee.occupation, employee.department].some((field) =>
       field?.toLowerCase().includes(query),
     )
   )
