@@ -4,10 +4,6 @@ import { getEmploymentDateStatus } from '@/utils/employees/dateUtils'
 const columnHelper = createColumnHelper()
 
 export const employeeTableColumns = [
-  columnHelper.accessor('code', {
-    header: 'Code',
-  }),
-
   columnHelper.accessor('fullName', {
     header: 'Full Name',
   }),

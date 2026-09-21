@@ -26,6 +26,10 @@ defineProps({
     type: Boolean,
     default: false,
   },
+  options: {
+    type: Array,
+    default: null,
+  },
 })
 
 const model = defineModel({ type: [String, Number], default: '' })
@@ -33,6 +37,7 @@ const emit = defineEmits(['blur'])
 
 const inputId = `input-${useId()}`
 const errorId = `${inputId}-error`
+const datalistId = `${inputId}-options`
 </script>
 
 <template>
@@ -52,8 +57,13 @@ const errorId = `${inputId}-error`
       :aria-label="ariaLabel || label || undefined"
       :aria-invalid="!!error"
       :aria-describedby="error ? errorId : undefined"
+      :list="options ? datalistId : undefined"
       @blur="emit('blur')"
     />
+
+    <datalist v-if="options" :id="datalistId">
+      <option v-for="option in options" :key="option" :value="option" />
+    </datalist>
 
     <p v-if="error" :id="errorId" class="form-error" role="alert">{{ error }}</p>
   </div>

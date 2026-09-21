@@ -36,6 +36,12 @@ export const useEmployeeStore = defineStore('employee', () => {
     }
   }
 
+  async function addEmployee(employee) {
+    const created = await employeeService.createEmployee(employee)
+    employees.value.push(created)
+    return created
+  }
+
   return {
     employees,
     isLoading,
@@ -46,5 +52,6 @@ export const useEmployeeStore = defineStore('employee', () => {
     departments,
     occupations,
     fetchEmployees,
+    addEmployee,
   }
 })
