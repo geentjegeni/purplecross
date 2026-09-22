@@ -18,22 +18,12 @@ body {
 }
 
 .page {
-  min-height: 100vh;
-  padding: 40px;
+  padding: 32px 40px 40px;
 }
 
 .page-header {
   max-width: 1400px;
   margin: 0 auto 24px;
-}
-
-.page-company-title {
-  margin: 0 0 6px;
-  color: #6b7280;
-  font-size: 0.875rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
 }
 
 .page-title {

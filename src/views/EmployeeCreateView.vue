@@ -33,7 +33,6 @@ async function onSubmit(employee) {
 <template>
   <main class="page">
     <div class="page-header">
-      <p class="page-company-title">Purple Cross Ltd.</p>
 
       <h1 class="page-title">Create Employee</h1>
 
