@@ -1,7 +1,9 @@
 <script setup>
+import { Download, Upload } from '@lucide/vue'
 import BaseInput from '@/components/common/BaseInput.vue'
 import MultiSelect from '@/components/common/MultiSelect.vue'
 import BaseToolbar from '@/components/common/BaseToolbar.vue'
+import BaseButton from '@/components/common/BaseButton.vue'
 
 defineProps({
   departmentOptions: {
@@ -17,6 +19,8 @@ defineProps({
 const search = defineModel('search', { type: String, default: '' })
 const departments = defineModel('departments', { type: Array, default: () => [] })
 const occupations = defineModel('occupations', { type: Array, default: () => [] })
+
+const emit = defineEmits(['import', 'export'])
 </script>
 
 <template>
@@ -32,11 +36,27 @@ const occupations = defineModel('occupations', { type: Array, default: () => [] 
     <MultiSelect v-model="departments" label="Department" :options="departmentOptions" />
 
     <MultiSelect v-model="occupations" label="Occupation" :options="occupationOptions" />
+
+    <div class="toolbar-actions">
+      <BaseButton variant="secondary" @click="emit('import')">
+        <Upload :size="15" /> Import
+      </BaseButton>
+
+      <BaseButton variant="secondary" @click="emit('export')">
+        <Download :size="15" /> Export
+      </BaseButton>
+    </div>
   </BaseToolbar>
 </template>
 
 <style scoped>
 .toolbar-search {
   flex: 1 1 260px;
+}
+
+.toolbar-actions {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
 }
 </style>

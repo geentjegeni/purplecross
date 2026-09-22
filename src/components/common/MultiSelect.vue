@@ -61,11 +61,7 @@ onBeforeUnmount(() => document.removeEventListener('click', onClickOutside))
       <ul class="multi-select-options">
         <li v-for="option in options" :key="option">
           <label class="multi-select-option">
-            <input
-              type="checkbox"
-              :checked="selected.has(option)"
-              @change="toggleOption(option)"
-            />
+            <input type="checkbox" :checked="selected.has(option)" @change="toggleOption(option)" />
             {{ option }}
           </label>
         </li>
@@ -73,12 +69,7 @@ onBeforeUnmount(() => document.removeEventListener('click', onClickOutside))
         <li v-if="options.length === 0" class="multi-select-empty">No options</li>
       </ul>
 
-      <button
-        v-if="model.length"
-        type="button"
-        class="multi-select-clear"
-        @click="clearSelection"
-      >
+      <button v-if="model.length" type="button" class="multi-select-clear" @click="clearSelection">
         Clear
       </button>
     </div>

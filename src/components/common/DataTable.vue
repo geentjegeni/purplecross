@@ -52,7 +52,6 @@ const table = useTable({
   },
   ...props.tableOptions,
 })
-
 </script>
 
 <template>

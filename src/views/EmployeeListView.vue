@@ -5,6 +5,8 @@ import { storeToRefs } from 'pinia'
 import { useEmployeeStore } from '@/stores/employeeStore'
 import { useEmployeeFilters } from '@/composables/useEmployeeFilters'
 import { useToast } from '@/composables/useToast'
+import { employeesToCsv, csvToEmployees } from '@/utils/employees/employeeCsv'
+import { downloadFile } from '@/utils/download'
 import EmployeeTable from '@/components/employees/EmployeeTable.vue'
 import EmployeeTableToolbar from '@/components/employees/EmployeeTableToolbar.vue'
 import ConfirmDialog from '@/components/common/ConfirmDialog.vue'
@@ -38,6 +40,34 @@ const {
   filteredEmployees,
 } = useEmployeeFilters()
 
+const fileInput = ref(null)
+
+function onExport() {
+  downloadFile('employees.csv', employeesToCsv(filteredEmployees.value))
+  toast.success(`Exported ${filteredEmployees.value.length} employees`)
+}
+
+async function onFileChange(event) {
+  const file = event.target.files[0]
+  event.target.value = ''
+  if (!file) {
+    return
+  }
+
+  const { employees, errors } = csvToEmployees(await file.text())
+  if (errors.length) {
+    toast.error(errors[0])
+    return
+  }
+
+  try {
+    const result = await employeeStore.importEmployees(employees)
+    toast.success(`Imported ${result.added} employees, updated ${result.updated}`)
+  } catch {
+    toast.error('Failed to import employees. Please try again.')
+  }
+}
+
 onMounted(() => {
   employeeStore.fetchEmployees()
 })
@@ -46,7 +76,6 @@ onMounted(() => {
 <template>
   <main class="page">
     <div class="page-header">
-
       <h1 class="page-title">Employees</h1>
 
       <p class="page-description">Manage your organization's employees and employment details.</p>
@@ -64,7 +93,11 @@ onMounted(() => {
           v-model:occupations="selectedOccupations"
           :department-options="departments"
           :occupation-options="occupations"
+          @import="fileInput.click()"
+          @export="onExport"
         />
+
+        <input ref="fileInput" type="file" accept=".csv" hidden @change="onFileChange" />
 
         <EmployeeTable
           :employees="filteredEmployees"

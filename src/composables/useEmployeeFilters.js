@@ -7,8 +7,14 @@ function matchesSelection(selected, value) {
 }
 
 export function useEmployeeFilters() {
-  const { employees, searchQuery, selectedDepartments, selectedOccupations, departments, occupations } =
-    storeToRefs(useEmployeeStore())
+  const {
+    employees,
+    searchQuery,
+    selectedDepartments,
+    selectedOccupations,
+    departments,
+    occupations,
+  } = storeToRefs(useEmployeeStore())
 
   const filteredEmployees = computed(() => {
     const query = searchQuery.value.trim().toLowerCase()

@@ -55,6 +55,12 @@ export const useEmployeeStore = defineStore('employee', () => {
     return updated
   }
 
+  async function importEmployees(list) {
+    const result = await employeeService.importEmployees(list)
+    employees.value = result.employees
+    return result
+  }
+
   async function deleteEmployee(code) {
     await employeeService.deleteEmployee(code)
     employees.value = employees.value.filter((e) => e.code !== code)
@@ -73,6 +79,7 @@ export const useEmployeeStore = defineStore('employee', () => {
     fetchEmployees,
     addEmployee,
     updateEmployee,
+    importEmployees,
     deleteEmployee,
   }
 })

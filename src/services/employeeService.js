@@ -36,6 +36,30 @@ class EmployeeService {
     })
   }
 
+  async importEmployees(imported) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        let added = 0
+        let updated = 0
+
+        for (const employee of imported) {
+          const index = this.#employees.findIndex(
+            (e) => e.code.toLowerCase() === employee.code.toLowerCase(),
+          )
+          if (index === -1) {
+            this.#employees.push(employee)
+            added++
+          } else {
+            this.#employees[index] = { ...employee, code: this.#employees[index].code }
+            updated++
+          }
+        }
+
+        resolve({ employees: [...this.#employees], added, updated })
+      }, 300)
+    })
+  }
+
   async deleteEmployee(code) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {

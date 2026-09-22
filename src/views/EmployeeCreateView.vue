@@ -33,18 +33,13 @@ async function onSubmit(employee) {
 <template>
   <main class="page">
     <div class="page-header">
-
       <h1 class="page-title">Create Employee</h1>
 
       <p class="page-description">Add a new employee to your organization.</p>
     </div>
 
     <section class="card form-card">
-      <EmployeeForm
-        :submitting="isSaving"
-        @submit="onSubmit"
-        @cancel="router.push('/employees')"
-      />
+      <EmployeeForm :submitting="isSaving" @submit="onSubmit" @cancel="router.push('/employees')" />
     </section>
   </main>
 </template>

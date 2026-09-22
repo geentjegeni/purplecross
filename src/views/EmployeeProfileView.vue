@@ -41,7 +41,6 @@ async function onSubmit(payload) {
 <template>
   <main class="page">
     <div class="page-header">
-
       <h1 class="page-title">{{ isEditing ? 'Edit Employee' : 'Employee Profile' }}</h1>
 
       <p v-if="employee" class="page-description">{{ employee.fullName }}</p>
