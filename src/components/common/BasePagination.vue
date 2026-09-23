@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { ChevronFirst, ChevronLast, ChevronLeft, ChevronRight } from '@lucide/vue'
 import BaseToolbar from '@/components/common/BaseToolbar.vue'
+import BaseButton from '@/components/common/BaseButton.vue'
 
 const props = defineProps({
   total: {
@@ -53,19 +54,19 @@ const rangeEnd = computed(() => Math.min(page.value * pageSize.value, props.tota
     </label>
 
     <div class="page-controls">
-      <button type="button" :disabled="!canPrev" aria-label="First page" @click="page = 1">
+      <BaseButton variant="secondary" icon :disabled="!canPrev" aria-label="First page" @click="page = 1">
         <ChevronFirst :size="14" />
-      </button>
-      <button type="button" :disabled="!canPrev" aria-label="Previous page" @click="page--">
+      </BaseButton>
+      <BaseButton variant="secondary" icon :disabled="!canPrev" aria-label="Previous page" @click="page--">
         <ChevronLeft :size="14" />
-      </button>
+      </BaseButton>
       <span class="page-indicator">{{ page }} / {{ pageCount }}</span>
-      <button type="button" :disabled="!canNext" aria-label="Next page" @click="page++">
+      <BaseButton variant="secondary" icon :disabled="!canNext" aria-label="Next page" @click="page++">
         <ChevronRight :size="14" />
-      </button>
-      <button type="button" :disabled="!canNext" aria-label="Last page" @click="page = pageCount">
+      </BaseButton>
+      <BaseButton variant="secondary" icon :disabled="!canNext" aria-label="Last page" @click="page = pageCount">
         <ChevronLast :size="14" />
-      </button>
+      </BaseButton>
     </div>
   </BaseToolbar>
 </template>
@@ -101,30 +102,6 @@ const rangeEnd = computed(() => Math.min(page.value * pageSize.value, props.tota
   display: inline-flex;
   align-items: center;
   gap: 4px;
-}
-
-.page-controls button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 28px;
-  padding: 4px 8px;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  background: #ffffff;
-  color: #1f2937;
-  font-size: 0.8rem;
-  cursor: pointer;
-}
-
-.page-controls button:hover:not(:disabled) {
-  border-color: #7c3aed;
-  color: #7c3aed;
-}
-
-.page-controls button:disabled {
-  opacity: 0.4;
-  cursor: default;
 }
 
 .page-indicator {

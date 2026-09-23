@@ -60,6 +60,18 @@ body {
   color: #dc2626;
 }
 
+.action-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.action-row.with-divider {
+  padding-top: 20px;
+  border-top: 1px solid #eef0f3;
+}
+
 @media (max-width: 768px) {
   .page {
     padding: 24px 16px;

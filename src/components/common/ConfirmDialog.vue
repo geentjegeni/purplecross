@@ -35,7 +35,7 @@ const emit = defineEmits(['confirm', 'cancel'])
 
         <p v-if="message" class="dialog-message">{{ message }}</p>
 
-        <div class="dialog-actions">
+        <div class="action-row">
           <BaseButton variant="secondary" @click="emit('cancel')">Cancel</BaseButton>
           <BaseButton variant="danger" :disabled="loading" @click="emit('confirm')">
             {{ confirmLabel }}
@@ -77,12 +77,5 @@ const emit = defineEmits(['confirm', 'cancel'])
   margin: 0;
   color: #6b7280;
   font-size: 0.9rem;
-}
-
-.dialog-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 24px;
 }
 </style>

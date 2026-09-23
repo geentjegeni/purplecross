@@ -95,7 +95,7 @@ async function onSubmit(payload) {
           </div>
         </dl>
 
-        <div class="profile-actions">
+        <div class="action-row with-divider">
           <BaseButton variant="secondary" :to="{ name: 'employees' }">Back</BaseButton>
           <BaseButton
             :to="{
@@ -137,15 +137,6 @@ async function onSubmit(payload) {
   margin: 0;
   color: #1f2937;
   font-size: 0.95rem;
-}
-
-.profile-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 24px;
-  padding-top: 20px;
-  border-top: 1px solid #eef0f3;
 }
 
 @media (max-width: 640px) {

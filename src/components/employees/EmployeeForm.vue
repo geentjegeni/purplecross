@@ -101,7 +101,7 @@ function onSubmit() {
       />
     </div>
 
-    <div class="form-actions">
+    <div class="action-row with-divider">
       <BaseButton variant="secondary" @click="emit('cancel')">Cancel</BaseButton>
       <BaseButton
         type="submit"
@@ -119,15 +119,6 @@ function onSubmit() {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px 20px;
-}
-
-.form-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 24px;
-  padding-top: 20px;
-  border-top: 1px solid #eef0f3;
 }
 
 @media (max-width: 640px) {

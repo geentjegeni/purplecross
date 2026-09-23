@@ -1,6 +1,7 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { ChevronDown } from '@lucide/vue'
+import BaseButton from '@/components/common/BaseButton.vue'
 
 const props = defineProps({
   label: {
@@ -46,8 +47,8 @@ onBeforeUnmount(() => document.removeEventListener('click', onClickOutside))
 
 <template>
   <div ref="root" class="multi-select" @keydown.escape="isOpen = false">
-    <button
-      type="button"
+    <BaseButton
+      variant="secondary"
       class="multi-select-button"
       :class="{ 'is-active': model.length }"
       :aria-expanded="isOpen"
@@ -55,7 +56,7 @@ onBeforeUnmount(() => document.removeEventListener('click', onClickOutside))
     >
       {{ buttonLabel }}
       <ChevronDown :size="14" class="chevron" :class="{ 'chevron-open': isOpen }" />
-    </button>
+    </BaseButton>
 
     <div v-if="isOpen" class="multi-select-panel">
       <ul class="multi-select-options">
@@ -79,23 +80,6 @@ onBeforeUnmount(() => document.removeEventListener('click', onClickOutside))
 <style scoped>
 .multi-select {
   position: relative;
-}
-
-.multi-select-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 9px 12px;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  background: #ffffff;
-  color: #1f2937;
-  font-size: 0.875rem;
-  cursor: pointer;
-}
-
-.multi-select-button:hover {
-  border-color: #9ca3af;
 }
 
 .multi-select-button.is-active {
