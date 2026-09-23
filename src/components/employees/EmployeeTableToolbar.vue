@@ -59,4 +59,18 @@ const emit = defineEmits(['import', 'export'])
   gap: 8px;
   margin-left: auto;
 }
+
+@media (max-width: 640px) {
+  .toolbar-search {
+    flex-basis: 100%;
+  }
+
+  .toolbar-actions {
+    width: 100%;
+  }
+
+  .toolbar-actions :deep(.btn) {
+    flex: 1;
+  }
+}
 </style>

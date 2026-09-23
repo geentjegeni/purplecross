@@ -1,4 +1,4 @@
-export function getEmploymentDateStatus(date) {
+export function getDateStatus(date) {
   if (!date) {
     return null
   }

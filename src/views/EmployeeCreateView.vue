@@ -21,7 +21,7 @@ async function onSubmit(employee) {
   try {
     await employeeStore.addEmployee(employee)
     toast.success(`Employee ${employee.fullName} created`)
-    router.push('/employees')
+    router.push({ name: 'employees' })
   } catch {
     toast.error('Failed to save the employee. Please try again.')
   } finally {
@@ -39,7 +39,11 @@ async function onSubmit(employee) {
     </div>
 
     <section class="card form-card">
-      <EmployeeForm :submitting="isSaving" @submit="onSubmit" @cancel="router.push('/employees')" />
+      <EmployeeForm
+        :submitting="isSaving"
+        @submit="onSubmit"
+        @cancel="router.push({ name: 'employees' })"
+      />
     </section>
   </main>
 </template>

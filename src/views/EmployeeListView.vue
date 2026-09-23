@@ -116,7 +116,7 @@ onMounted(() => {
       @cancel="pendingDelete = null"
     />
 
-    <RouterLink to="/employees/new" class="fab" aria-label="Create employee">
+    <RouterLink :to="{ name: 'employee-new' }" class="fab" aria-label="Create employee">
       <Plus :size="22" />
     </RouterLink>
   </main>

@@ -29,7 +29,7 @@ async function onSubmit(payload) {
   try {
     await employeeStore.updateEmployee(route.params.code, payload)
     toast.success(`Employee ${payload.fullName} updated`)
-    router.push(`/employees/${route.params.code}`)
+    router.push({ name: 'employee-profile', params: { code: route.params.code } })
   } catch {
     toast.error('Failed to save the employee. Please try again.')
   } finally {
@@ -51,7 +51,7 @@ async function onSubmit(payload) {
 
       <div v-else-if="!employee" class="state">
         Employee not found.
-        <RouterLink to="/employees">Back to employees</RouterLink>
+        <RouterLink :to="{ name: 'employees' }">Back to employees</RouterLink>
       </div>
 
       <EmployeeForm
@@ -59,7 +59,7 @@ async function onSubmit(payload) {
         :initial="employee"
         :submitting="isSaving"
         @submit="onSubmit"
-        @cancel="router.push('/employees')"
+        @cancel="router.push({ name: 'employees' })"
       />
 
       <template v-else>
@@ -96,8 +96,14 @@ async function onSubmit(payload) {
         </dl>
 
         <div class="profile-actions">
-          <BaseButton variant="secondary" @click="router.push('/employees')">Back</BaseButton>
-          <BaseButton @click="router.push(`/employees/${employee.code}?edit=true`)">
+          <BaseButton variant="secondary" :to="{ name: 'employees' }">Back</BaseButton>
+          <BaseButton
+            :to="{
+              name: 'employee-profile',
+              params: { code: employee.code },
+              query: { edit: 'true' },
+            }"
+          >
             Edit
           </BaseButton>
         </div>

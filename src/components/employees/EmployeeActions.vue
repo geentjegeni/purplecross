@@ -15,7 +15,7 @@ const emit = defineEmits(['delete'])
 <template>
   <div class="row-actions">
     <BaseButton
-      :to="`/employees/${employee.code}`"
+      :to="{ name: 'employee-profile', params: { code: employee.code } }"
       variant="secondary"
       icon
       aria-label="View employee"
@@ -24,7 +24,7 @@ const emit = defineEmits(['delete'])
     </BaseButton>
 
     <BaseButton
-      :to="`/employees/${employee.code}?edit=true`"
+      :to="{ name: 'employee-profile', params: { code: employee.code }, query: { edit: 'true' } }"
       variant="secondary"
       icon
       aria-label="Edit employee"

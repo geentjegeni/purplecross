@@ -10,18 +10,21 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: '/employees',
+      redirect: { name: 'employees' },
     },
     {
       path: '/employees',
+      name: 'employees',
       component: EmployeeListView,
     },
     {
       path: '/employees/new',
+      name: 'employee-new',
       component: EmployeeCreateView,
     },
     {
       path: '/employees/:code',
+      name: 'employee-profile',
       component: EmployeeProfileView,
     },
     {

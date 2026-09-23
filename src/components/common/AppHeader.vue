@@ -1,10 +1,10 @@
 <template>
   <header class="app-header">
     <div class="app-header-inner">
-      <RouterLink to="/employees" class="brand">Purple Cross</RouterLink>
+      <RouterLink :to="{ name: 'employees' }" class="brand">Purple Cross</RouterLink>
 
       <nav class="app-nav">
-        <RouterLink to="/employees" class="nav-link">Employees</RouterLink>
+        <RouterLink :to="{ name: 'employees' }" class="nav-link">Employees</RouterLink>
       </nav>
     </div>
   </header>

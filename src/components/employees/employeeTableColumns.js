@@ -1,6 +1,6 @@
 import { h } from 'vue'
 import { createColumnHelper } from '@tanstack/vue-table'
-import { getEmploymentDateStatus } from '@/utils/employees/dateUtils'
+import { getDateStatus } from '@/utils/employees/dateUtils'
 import EmployeeActions from '@/components/employees/EmployeeActions.vue'
 
 const columnHelper = createColumnHelper()
@@ -23,7 +23,7 @@ export function createEmployeeColumns({ onDelete } = {}) {
       header: 'Date of Employment',
 
       cell: (info) => {
-        const status = getEmploymentDateStatus(info.getValue())
+        const status = getDateStatus(info.getValue())
 
         return status === 'future' ? 'Employed soon' : 'Currently employed'
       },
@@ -35,7 +35,7 @@ export function createEmployeeColumns({ onDelete } = {}) {
       sortUndefined: 'last',
 
       cell: (info) => {
-        const status = getEmploymentDateStatus(info.getValue())
+        const status = getDateStatus(info.getValue())
 
         if (!status) {
           return ''
