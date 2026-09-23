@@ -54,18 +54,42 @@ const rangeEnd = computed(() => Math.min(page.value * pageSize.value, props.tota
     </label>
 
     <div class="page-controls">
-      <BaseButton variant="secondary" icon :disabled="!canPrev" aria-label="First page" @click="page = 1">
-        <ChevronFirst :size="14" />
+      <BaseButton
+        variant="secondary"
+        icon
+        :disabled="!canPrev"
+        aria-label="First page"
+        @click="page = 1"
+      >
+        <ChevronFirst :size="15" />
       </BaseButton>
-      <BaseButton variant="secondary" icon :disabled="!canPrev" aria-label="Previous page" @click="page--">
-        <ChevronLeft :size="14" />
+      <BaseButton
+        variant="secondary"
+        icon
+        :disabled="!canPrev"
+        aria-label="Previous page"
+        @click="page--"
+      >
+        <ChevronLeft :size="15" />
       </BaseButton>
       <span class="page-indicator">{{ page }} / {{ pageCount }}</span>
-      <BaseButton variant="secondary" icon :disabled="!canNext" aria-label="Next page" @click="page++">
-        <ChevronRight :size="14" />
+      <BaseButton
+        variant="secondary"
+        icon
+        :disabled="!canNext"
+        aria-label="Next page"
+        @click="page++"
+      >
+        <ChevronRight :size="15" />
       </BaseButton>
-      <BaseButton variant="secondary" icon :disabled="!canNext" aria-label="Last page" @click="page = pageCount">
-        <ChevronLast :size="14" />
+      <BaseButton
+        variant="secondary"
+        icon
+        :disabled="!canNext"
+        aria-label="Last page"
+        @click="page = pageCount"
+      >
+        <ChevronLast :size="15" />
       </BaseButton>
     </div>
   </BaseToolbar>

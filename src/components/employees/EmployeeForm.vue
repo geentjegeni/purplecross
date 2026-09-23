@@ -3,6 +3,7 @@ import { useEmployeeForm } from '@/composables/useEmployeeForm'
 import { useUnsavedChanges } from '@/composables/useUnsavedChanges'
 import BaseInput from '@/components/common/BaseInput.vue'
 import BaseButton from '@/components/common/BaseButton.vue'
+import ConfirmDialog from '@/components/common/ConfirmDialog.vue'
 
 const props = defineProps({
   initial: {
@@ -32,7 +33,7 @@ const {
   toPayload,
 } = useEmployeeForm(props.initial)
 
-useUnsavedChanges(isDirty)
+const { showLeaveDialog, leaveMessage, confirmLeave, cancelLeave } = useUnsavedChanges(isDirty)
 
 function onSubmit() {
   if (validateAll()) {
@@ -112,6 +113,15 @@ function onSubmit() {
       </BaseButton>
     </div>
   </form>
+
+  <ConfirmDialog
+    :open="showLeaveDialog"
+    title="Unsaved changes"
+    :message="leaveMessage"
+    confirm-label="Leave"
+    @confirm="confirmLeave"
+    @cancel="cancelLeave"
+  />
 </template>
 
 <style scoped>
